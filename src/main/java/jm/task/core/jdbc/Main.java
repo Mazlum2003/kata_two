@@ -1,6 +1,7 @@
 package jm.task.core.jdbc;
 
 import jm.task.core.jdbc.dao.UserDao;
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserService;
@@ -10,32 +11,31 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        UserDao userDao = new UserDaoJDBCImpl();
-        UserService userService = new UserServiceImpl();
+        UserDao userDaoHib = new UserDaoHibernateImpl();
 
-        // Создание таблицы
-        userService.createUsersTable();
+        userDaoHib.createUsersTable();
         System.out.println("Таблица users создана");
 
-        userService.saveUser("Иван", "Иванов", (byte) 25);
-        userService.saveUser("Максим", "Максимов", (byte) 30);
-        userService.saveUser("Олег", "Олегов", (byte) 35);
-        userService.saveUser("Анна", "Анисимова", (byte) 28);
+        userDaoHib.saveUser("Иван", "Иванов", (byte) 25);
+        userDaoHib.saveUser("Максим", "Максимов", (byte) 30);
+        userDaoHib.saveUser("Олег", "Олегов", (byte) 35);
+        userDaoHib.saveUser("Анна", "Анисимова", (byte) 28);
 
         // Получение всех пользователей
-        List<User> users = userService.getAllUsers();
+        List<User> users = userDaoHib.getAllUsers();
         System.out.println("Все пользователи в базе данных:");
         for (User user : users) {
             System.out.println(user);
         }
 
         // Очистка таблицы
-        userService.cleanUsersTable();
+        userDaoHib.cleanUsersTable();
         System.out.println("Таблица users очищена");
 
         // Удаление таблицы
-        userService.dropUsersTable();
+        userDaoHib.dropUsersTable();
         System.out.println("Таблица users удалена");
+
 
 
 
